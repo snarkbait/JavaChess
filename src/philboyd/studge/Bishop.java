@@ -131,4 +131,10 @@ public class Bishop extends Piece implements Moveable
           
         return moves;
     }
+    
+    @Override
+    public String toString()
+    {
+        return ((black)? "Black " : "White ") + ((side==Side.KINGS)? "Kings's Bishop" : "Queen's Bishop");
+    }
 }

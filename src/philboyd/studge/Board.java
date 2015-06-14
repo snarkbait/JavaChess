@@ -19,9 +19,10 @@ public class Board
                                        { 0, 0, 0, 0, 0, 0, 0, 0 },
                                        { 0, 0, 0, 0, 0, 0, 0, 0 },
                                        { 1, 1, 1, 1, 1, 1, 1, 1 },
-                                       { 9, 8, 7, 5, 6, 4, 3, 2 } };
+                                       { 2, 3, 4, 5, 6, 7, 8, 9 } };
     
     
+    private GameLogger logger = new GameLogger();
     
     public Board()
     {
@@ -47,13 +48,13 @@ public class Board
                             board[j][i] = new Pawn(temp, black);
                             break;
                         case 2 :
-                            board[j][i] = new Rook(temp, black, Side.LEFT);
+                            board[j][i] = new Rook(temp, black, Side.QUEENS);
                             break;
                         case 3 :
-                            board[j][i] = new Knight(temp, black, Side.LEFT);
+                            board[j][i] = new Knight(temp, black, Side.QUEENS);
                             break;
                         case 4 :
-                            board[j][i] = new Bishop(temp, black, Side.LEFT);
+                            board[j][i] = new Bishop(temp, black, Side.QUEENS);
                             break;
                         case 5 : 
                             board[j][i] = new Queen(temp, black);
@@ -62,13 +63,13 @@ public class Board
                             board[j][i] = new King(temp, black);
                             break;
                         case 7 :
-                            board[j][i] = new Bishop(temp, black, Side.RIGHT);
+                            board[j][i] = new Bishop(temp, black, Side.KINGS);
                             break;
                         case 8 :
-                            board[j][i] = new Knight(temp, black, Side.RIGHT);
+                            board[j][i] = new Knight(temp, black, Side.KINGS);
                             break;
                         case 9 :
-                            board[j][i] = new Rook(temp, black, Side.RIGHT);
+                            board[j][i] = new Rook(temp, black, Side.KINGS);
                             break;
                             
                     }
@@ -121,6 +122,7 @@ public class Board
         {
             board[piece.getLocation().getX()][piece.getLocation().getY()]
                     = new Queen(piece.getLocation(), piece.isBlack());
+            logger.add("Pawn is Queened!!!");
         }
     }
     
@@ -136,6 +138,11 @@ public class Board
             checkQueen(p);
         }
             
+    }
+    
+    public GameLogger getLog()
+    {
+        return logger;
     }
     
     @Override

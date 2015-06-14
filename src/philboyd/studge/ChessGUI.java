@@ -7,6 +7,7 @@ package philboyd.studge;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
@@ -68,12 +69,15 @@ public class ChessGUI extends JFrame
     private boolean selected = false;
     private int selectedX;
     private int selectedY; 
-    private boolean turn;
+    private boolean whiteTurn;
+    
+    private Piece picked;
+    private Piece enemy;
     
     public ChessGUI(Board gameboard)
     {
         super("Chess");
-        this.turn = false;
+        this.whiteTurn = false;
         this.gameboard = gameboard;
         super.setSize(WINDOW_WIDTH,WINDOW_HEIGHT);
         PAWN_BLACK = new ImageIcon(getClass().getResource("/philboyd/studge/resource/pawn_black.png"));
@@ -91,6 +95,7 @@ public class ChessGUI extends JFrame
         
         initComponents();
         refresh();
+        turn();
     }
     
     private void initComponents()
@@ -129,8 +134,8 @@ public class ChessGUI extends JFrame
                     text.setEditable(false);
                     text.setText("Welcome to CHESS!!!\n");
 
-            console = new JScrollPane();
-                    //console.setPreferredSize(new Dimension(WINDOW_WIDTH - 20,BOARD_SIZE * 10));
+            console = new JScrollPane(text);
+                    console.setPreferredSize(new Dimension(WINDOW_WIDTH - 20,BOARD_SIZE * 10));
                     console.setViewportView(text);
                     console.setAutoscrolls(true);
 
@@ -218,46 +223,58 @@ public class ChessGUI extends JFrame
 
     public void cellClicked(int x, int y)
     {
+        Moveable m = null;
             
-            if (!selected)
+        if (!selected)
+        {
+            cells[x][y].setBackground(HILIGHT);
+            selected = true;
+            selectedX = x;
+            selectedY = y;
+            if (gameboard.getType(x, y) != null && gameboard.getBlack(x, y)!=whiteTurn)
             {
-                cells[x][y].setBackground(HILIGHT);
-                selected = true;
-                selectedX = x;
-                selectedY = y;
-                if (gameboard.getType(x, y) != null)
+                picked = gameboard.getPiece(new Cell(selectedX,selectedY));
+                m = picked;
+                List<Cell> moves = m.getAvailableMoves(gameboard);
+                for (Cell each : moves)
                 {
-                    List<Cell> moves = gameboard.getCell(new Cell(x, y)).getAvailableMoves(gameboard);
-                    moves.stream().forEach((each) -> {
-                        if (gameboard.getType(each.getX(), each.getY())!=null)
-                        {
-                            cells[each.getX()][each.getY()].setBackground(ATTACK);
-                        } else cells[each.getX()][each.getY()].setBackground(MOVES);
-                    });
+                    if (gameboard.getType(each.getX(), each.getY())!=null)
+                    {
+                        cells[each.getX()][each.getY()].setBackground(ATTACK);
+                        enemy = gameboard.getPiece(new Cell(each.getX(), each.getY()));
+                   } else cells[each.getX()][each.getY()].setBackground(MOVES);
                 }
+            }
 
-            }
-            else
+        }
+        else
+        {
+            if (cells[x][y].getBackground().equals(MOVES))
             {
-                if (cells[x][y].getBackground().equals(MOVES))
-                {
-                    gameboard.move(new Cell(selectedX,selectedY), new Cell(x, y));
-                    selected = false;
-                    turn = true;
-                    
-                    refresh();
-                }
-                if (cells[x][y].getBackground().equals(ATTACK))
-                {
-                    gameboard.move(new Cell(selectedX,selectedY), new Cell(x, y));
-                    selected = false;
-                    turn = true;
-                    
-                    refresh();
-                }
+                gameboard.move(new Cell(selectedX,selectedY), new Cell(x, y));
+                selected = false;
+                turn();
+
+                refresh();
             }
+            if (cells[x][y].getBackground().equals(ATTACK))
+            {
+                gameboard.move(new Cell(selectedX,selectedY), new Cell(x, y));
+                selected = false;
+                gameboard.getLog().add(picked + " takes " + enemy);
+                turn();
+
+                refresh();
+            }
+        }
     }
     
+    public void turn()
+    {
+        whiteTurn = !whiteTurn;
+        readLog(gameboard.getLog());
+        text.append(((whiteTurn)? "White " : "Black ") + "turn to move.\n");
+    }
     public void readLog(GameLogger log)
     {
         while (!log.isEmpty())

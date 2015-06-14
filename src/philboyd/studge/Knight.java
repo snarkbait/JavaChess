@@ -119,4 +119,10 @@ public class Knight extends Piece implements Moveable
 
         return moves;
     }
+    
+    @Override
+    public String toString()
+    {
+        return ((black)? "Black " : "White ") + ((side==Side.KINGS)? "Kings's Knight" : "Queen's Knight");
+    }
 }

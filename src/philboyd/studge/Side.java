@@ -10,5 +10,5 @@ package philboyd.studge;
  * @author tim
  */
 public enum Side {
-    LEFT, RIGHT
+    KINGS, QUEENS
 }

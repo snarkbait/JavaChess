@@ -11,24 +11,18 @@ package philboyd.studge;
  */
 public class Game
 {
-    Board board;
-    ChessGUI gui;
-    GameLogger logger = new GameLogger();
+    private Board board;
+    private ChessGUI gui;
     
-    boolean whiteTurn;
     
     public Game()
     {
         board = new Board();
         gui = new ChessGUI(board);
-        whiteTurn = true;
     }
     
-    public void takeTurn()
-    {
-        whiteTurn = !whiteTurn;
-        gui.readLog(logger);
-    }
+    
+
     
     public static void main(String[] args)
     {

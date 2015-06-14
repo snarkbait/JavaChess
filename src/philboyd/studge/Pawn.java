@@ -1,7 +1,7 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Class Pawn for game Java Chess
+ * 
+ * 
  */
 package philboyd.studge;
 
@@ -10,35 +10,32 @@ import java.util.List;
 
 /**
  *
- * @author tim
+ * @author /u/Philboyd_Studge
  */
 public class Pawn extends Piece implements Moveable
 {
     private boolean moved;
-    private boolean queened;
     
     public Pawn(Cell location, boolean black)
     {
         super(location, black, Pieces.PAWN);
         this.moved = false;
-        this.queened = false;
     }
     
     public boolean hasMoved() { return moved; }
     public void setMoved() { moved = true; }
-    public boolean isQueened() { return queened; }
     
     @Override
     public List<Cell> getAvailableMoves(Board board)
     {
         List<Cell> moves = new ArrayList<>();
-        if (!moved)
-        {
-            Cell temp = Cell.getMove(location, (black) ? Direction.SOUTH : Direction.NORTH, 2);
-            if (temp != null && !board.isOccupied(temp)) moves.add(temp);
-        }
         Cell temp = Cell.getMove(location, (black) ? Direction.SOUTH : Direction.NORTH, 1);
         if (temp != null && !board.isOccupied(temp)) moves.add(temp);
+        if (!moved)
+        {
+            Cell temp2 = Cell.getMove(location, (black) ? Direction.SOUTH : Direction.NORTH, 2);
+            if (temp2 != null && !board.isOccupied(temp2) && !board.isOccupied(temp)) moves.add(temp2);
+        }
         
         if (location.getX() < 7)
         {

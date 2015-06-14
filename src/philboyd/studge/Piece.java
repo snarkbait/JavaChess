@@ -44,4 +44,10 @@ public abstract class Piece implements Moveable{
     @Override
     public abstract List<Cell> getAvailableMoves(Board board);
     
+    @Override
+    public String toString()
+    {
+        return ((black) ? "Black " : "White ") + type;
+    }
+    
 }
