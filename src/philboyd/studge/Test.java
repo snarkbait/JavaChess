@@ -8,8 +8,8 @@ package philboyd.studge;
 import java.util.List;
 
 /**
- *
- * @author tim
+ * Test class plz delete
+ * @author /u/Philboyd_Studge
  */
 public class Test
 {

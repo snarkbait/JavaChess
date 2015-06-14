@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
- * @author tim
+ * Class Rook
+ * @author /u/Philboyd_Studge
  */
 public class Rook extends Piece implements Moveable
 {
@@ -34,99 +34,36 @@ public class Rook extends Piece implements Moveable
         int x = location.getX();
         int y = location.getY();
         
-        // NORTH
-        while (Cell.inBounds(y))
-        {
-            Cell temp = Cell.getMove(new Cell(x, y), Direction.NORTH, 1);
-            if (temp!=null)
+        Direction[] dirs = Direction.values();
+        
+        for (int i = 0; i < dirs.length; i+= 2)
+        {   
+            // check moves
+            while (Cell.inBounds(y) && Cell.inBounds(x))
             {
-                if (board.isOccupied(temp))
+                Cell temp = Cell.getMove(new Cell(x, y), dirs[i], 1);
+                if (temp!=null)
                 {
-                    if (board.isEnemy(temp, black))
+                    if (board.isOccupied(temp))
+                    {
+                        if (board.isEnemy(temp, black))
+                        {
+                            moves.add(temp);
+                        }
+                        break;
+                    }
+                    else
                     {
                         moves.add(temp);
                     }
-                    break;
                 }
-                else
-                {
-                    moves.add(temp);
-                }
+                x += dirs[i].getDX();
+                y += dirs[i].getDY();
             }
-            y -= 1;
+            x = location.getX();
+            y = location.getY();
         }
-        
-        y = location.getY();
-        
-        // sOUTH
-        while (Cell.inBounds(y))
-        {
-            Cell temp = Cell.getMove(new Cell(x, y), Direction.SOUTH, 1);
-            if (temp!=null)
-            {
-                if (board.isOccupied(temp))
-                {
-                    if (board.isEnemy(temp, black))
-                    {
-                        moves.add(temp);
-                    }
-                    break;
-                }
-                else
-                {
-                    moves.add(temp);
-                }
-            }
-            y += 1;
-        }
-        
-        y = location.getY();
-        
-        // East
-        while (Cell.inBounds(x))
-        {
-            Cell temp = Cell.getMove(new Cell(x, y), Direction.EAST, 1);
-            if (temp!=null)
-            {
-                if (board.isOccupied(temp))
-                {
-                    if (board.isEnemy(temp, black))
-                    {
-                        moves.add(temp);
-                    }
-                    break;
-                }
-                else
-                {
-                    moves.add(temp);
-                }
-            }
-            x += 1;
-        }
-        
-        x = location.getX();
-        
-        // west
-        while (Cell.inBounds(x))
-        {
-            Cell temp = Cell.getMove(new Cell(x, y), Direction.WEST, 1);
-            if (temp!=null)
-            {
-                if (board.isOccupied(temp))
-                {
-                    if (board.isEnemy(temp, black))
-                    {
-                        moves.add(temp);
-                    }
-                    break;
-                }
-                else
-                {
-                    moves.add(temp);
-                }
-            }
-            x -= 1;
-        }
+
         
         return moves;
     }

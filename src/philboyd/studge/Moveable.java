@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  *
- * @author tim
+ * @author /u/Philboyd_Studge
  */
 public interface Moveable
 {

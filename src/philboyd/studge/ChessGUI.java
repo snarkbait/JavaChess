@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package philboyd.studge;
 
 import java.awt.BorderLayout;
@@ -26,8 +21,8 @@ import javax.swing.WindowConstants;
 import javax.swing.text.DefaultCaret;
 
 /**
- *
- * @author tim
+ * Class ChessGUI
+ * @author /u/Philboyd_Studge
  */
 public class ChessGUI extends JFrame
 {
@@ -144,11 +139,12 @@ public class ChessGUI extends JFrame
 
             setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
-    
-    public void addLabelMouselistener(MouseAdapter listener, int x, int y)
-    {
-        cells[x][y].addMouseListener(listener);
-    }
+
+    // TODO: Use later if I want to MVC it
+//    public void addLabelMouselistener(MouseAdapter listener, int x, int y)
+//    {
+//        cells[x][y].addMouseListener(listener);
+//    }
     
     private void refresh()
     {
@@ -199,10 +195,11 @@ public class ChessGUI extends JFrame
 
     }  
     
-    public void setSelected(boolean selected)
-    {
-        this.selected = selected;
-    }
+//    public void setSelected(boolean selected)
+//    {
+//        this.selected = selected;
+//    }
+
     public MouseAdapter createMouseListener(final int x, final int y)
     {
         return new MouseAdapter()
@@ -275,6 +272,8 @@ public class ChessGUI extends JFrame
         readLog(gameboard.getLog());
         text.append(((whiteTurn)? "White " : "Black ") + "turn to move.\n");
     }
+    
+    
     public void readLog(GameLogger log)
     {
         while (!log.isEmpty())

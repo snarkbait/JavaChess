@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * Class Pawn
  * @author /u/Philboyd_Studge
  */
 public class Pawn extends Piece implements Moveable

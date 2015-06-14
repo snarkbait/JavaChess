@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
- * @author tim
+ * Class Knight
+ * @author /u/Philboyd_Studge
  */
 public class Knight extends Piece implements Moveable
 {

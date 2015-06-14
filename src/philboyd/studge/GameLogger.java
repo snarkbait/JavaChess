@@ -1,7 +1,7 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * GameLogger 'console' queue
+ * Yes, it's just a wrapped queue
+ * One of the 'NINE ANTI-PATTERNS'
  */
 package philboyd.studge;
 
@@ -10,7 +10,7 @@ import java.util.Queue;
 
 /**
  *
- * @author tim
+ * @author /u/Philboyd_Studge
  */
 public class GameLogger
 {

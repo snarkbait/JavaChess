@@ -3,8 +3,8 @@ package philboyd.studge;
 import java.util.List;
 
 /**
- *
- * @author tim
+ * Abstract Class Piece - Parent class of Chess Pieces
+ * @author /u/Philboyd_Studge
  */
 public abstract class Piece implements Moveable{
     
