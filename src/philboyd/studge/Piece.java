@@ -29,7 +29,10 @@ public abstract class Piece implements Moveable{
     {
         return location;
     }
-    
+    /**
+     * 
+     * @param location 
+     */
     public void setLocation(Cell location)
     {
         this.location = location;

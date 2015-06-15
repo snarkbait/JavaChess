@@ -1,5 +1,7 @@
 package philboyd.studge;
 
+import java.util.List;
+
 /**
  * Class Board - defines the chess board and handles piece movement
  * @author /u/Philboyd_Studge
@@ -90,6 +92,7 @@ public class Board
     {
         return (Piece) board[cell.getX()][cell.getY()];
     }
+    
     public Pieces getType(int x, int y)
     {
         return (board[x][y]==null) ? null : getPiece(new Cell(x, y)).getType();
@@ -108,6 +111,59 @@ public class Board
     public void putCell(Piece piece)
     {
         board[piece.getLocation().getX()][piece.getLocation().getY()] = piece;
+    }
+    
+//    public boolean checkMate(boolean black)
+//    {
+//        Cell king = getKing(black);
+//        List<Cell> moves = getCell(king).getAvailableMoves(this);
+//        for(Cell each : moves)
+//        {
+//            if (!inCheck(black, each)) return false;
+//        }
+//        return true;
+//    }
+    
+    public boolean inCheck(boolean black)
+    {
+        Cell king = getKing(black);
+        return inCheck(king);
+    }
+    
+    private boolean inCheck(Cell king)
+    {
+        
+        for (Moveable[] rank : board)
+        {
+            for (Moveable each : rank)
+            {
+                if (each != null)
+                {
+                    List<Cell> moves = each.getAvailableMoves(this);
+                    for (Cell current : moves)
+                    {
+                        if (current.getX()==king.getX() && current.getY()==king.getY()) return true;
+                    }
+                    
+                }
+                
+            }
+        }
+        return false;
+    }
+    
+    private Cell getKing(boolean black)
+    {
+        for (int i = 0; i < 8; i++)
+        {
+            for (int j = 0; j < 8; j++)
+            {
+               if (getType(i, j)==Pieces.KING)
+                   if (getBlack(i, j)==black)
+                       return getPiece(new Cell(i , j)).getLocation();
+            }
+        }
+        return null;
     }
     
     public void checkQueen(Piece piece)

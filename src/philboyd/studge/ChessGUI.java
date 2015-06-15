@@ -31,6 +31,7 @@ public class ChessGUI extends JFrame
     private final Color HILIGHT = new Color(255,32,32);
     private final Color MOVES = new Color(255,255,175);
     private final Color ATTACK = new Color(255,255,75);
+    private final Color CHECK = new Color(255,128,64);
     private final int BOARD_SIZE = 8;
     private final int WINDOW_WIDTH = (BOARD_SIZE * 10) * 8;
     private final int WINDOW_HEIGHT = ((BOARD_SIZE * 10) * 8) + (BOARD_SIZE * 10);
@@ -68,6 +69,8 @@ public class ChessGUI extends JFrame
     
     private Piece picked;
     private Piece enemy;
+    private boolean blackCheck;
+    private boolean whiteCheck;
     
     public ChessGUI(Board gameboard)
     {
@@ -184,6 +187,9 @@ public class ChessGUI extends JFrame
                                                     ? QUEEN_BLACK : QUEEN_WHITE));
                             break;
                         case KING : 
+                            if ((blackCheck && gameboard.getBlack(x, y))
+                                    || (whiteCheck && !gameboard.getBlack(x, y)))
+                                        cells[x][y].setBackground(CHECK);
                             labels[x][y].setIcon((gameboard.getBlack(x, y) 
                                                     ? KING_BLACK : KING_WHITE));
                             break;
@@ -271,6 +277,14 @@ public class ChessGUI extends JFrame
         whiteTurn = !whiteTurn;
         readLog(gameboard.getLog());
         text.append(((whiteTurn)? "White " : "Black ") + "turn to move.\n");
+        blackCheck = gameboard.inCheck(true);
+        whiteCheck = gameboard.inCheck(false);
+        if (blackCheck) text.append("Black King in CHECK!!\n");
+        if (whiteCheck) text.append("White King in CHECK!!\n");
+       // if (gameboard.checkMate(true)) text.append("CHECKMATE!! White wins!");
+       // if (gameboard.checkMate(false)) text.append("CHECKMATE!! Black wins!");
+        
+        
     }
     
     

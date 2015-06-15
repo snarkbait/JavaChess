@@ -27,7 +27,6 @@ public class Bishop extends Piece implements Moveable
     @Override
     public List<Cell> getAvailableMoves(Board board)
     {
-        System.out.println("bishop...");
         List<Cell> moves = new ArrayList<>();
         
         int x = location.getX();
